@@ -10,3 +10,5 @@
 #include "Engine/EntryPoint.h"
 
 // -- Entry Point -------------------
+
+// [TBD] = Windows event and clone and add glfw submodule to my project in vendor

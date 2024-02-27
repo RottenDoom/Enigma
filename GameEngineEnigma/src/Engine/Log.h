@@ -1,9 +1,8 @@
 #pragma once
 
-#include <memory>
-
 #include "Core.h"
 #include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 
 
 namespace eng {
@@ -18,8 +17,8 @@ namespace eng {
 		static std::shared_ptr<spdlog::logger>& GetClientLogger();
 
 	private:
-		// So according to stackoverflow when I am linking log.cpp it cant find declarations of these variables
-		static std::shared_ptr<spdlog::logger> s_CoreLogger; // [TBD = LNK2001 error unresolved external symbol for some reason
+		// fixed https://stackoverflow.com/questions/73511416/using-a-static-class-fuction-causes-a-linker-error-thanks-to-an-unresolved-exte
+		static std::shared_ptr<spdlog::logger> s_CoreLogger;
 		static std::shared_ptr<spdlog::logger> s_ClientLogger; // https://github.com/gabime/spdlog/issues/1505 this might be helpfull
 	};
 
