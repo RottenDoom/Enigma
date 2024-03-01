@@ -1,3 +1,6 @@
 [submodule "GameEngineEnigma/vendor/spdlog"]
 	path = GameEngineEnigma/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "GameEngineEnigma/vendor/GLFW"]
+	path = GameEngineEnigma/vendor/GLFW
+	url = https://github.com/RottenDoom/glfw
