@@ -1,14 +1,19 @@
 #include "engpch.h"
 #include "Application.h"
 
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 namespace eng {
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
+	Application* Application::s_Instance = nullptr;
+
 	Application::Application()
 	{
+		ENG_CORE_ASSERT(!s_Instance, "Application Already exists!")
+		s_Instance = this;
+
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 	}
@@ -36,11 +41,18 @@ namespace eng {
 	void Application::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* overlay)
 	{
 		m_LayerStack.PushOverlay(overlay);
+		overlay->OnAttach();
+	}
+
+	Application& Application::Get()
+	{
+		return *s_Instance;
 	}
 
 	void Application::Run()
@@ -62,6 +74,6 @@ namespace eng {
 	bool Application::OnWindowClose(WindowClosedEvent& e)
 	{
 		m_Running = false;
-		return false;
+		return true;
 	}
 }

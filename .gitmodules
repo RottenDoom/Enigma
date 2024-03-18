@@ -4,3 +4,6 @@
 [submodule "GameEngineEnigma/vendor/GLFW"]
 	path = GameEngineEnigma/vendor/GLFW
 	url = https://github.com/RottenDoom/glfw
+[submodule "GameEngineEnigma/vendor/imgui"]
+	path = GameEngineEnigma/vendor/imgui
+	url = https://github.com/RottenDoom/imgui

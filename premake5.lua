@@ -12,8 +12,12 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "GameEngineEnigma/vendor/GLFW/include"
+IncludeDir["Glad"] = "GameEngineEnigma/vendor/Glad/include"
+IncludeDir["ImGui"] = "GameEngineEnigma/vendor/imgui"
 
 include "GameEngineEnigma/vendor/GLFW"
+include "GameEngineEnigma/vendor/Glad"
+include "GameEngineEnigma/vendor/imgui"
 
 project "GameEngineEnigma"
 	location "GameEngineEnigma"
@@ -36,12 +40,16 @@ project "GameEngineEnigma"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.ImGui}"
 	}
 	
 	links
 	{
 		"GLFW",
+		"Glad",
+		"ImGui",
 		"opengl32.lib",
 		"dwmapi.lib"
 	}
@@ -54,7 +62,8 @@ project "GameEngineEnigma"
 		defines
 		{
 			"ENG_PLATFORM_WINDOWS",
-			"ENG_BUILD_DLL"
+			"ENG_BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
 		
 		postbuildcommands
