@@ -5,6 +5,10 @@
 namespace eng {
 
 	// when an event occurs it must be dealt with right then and there. we use buffer in future
+	// more simply we have a event listener that belongs to application which contains a callback from the window layer.
+	// since app creates windows app will have the windows functions but the opposite that is windows will not have any knowledge of app.
+	// so a event listener will help in dispatching data from events to app without event even knowng of application
+	// this helps in avoiding interdependence
 
 	enum class EventType
 	{

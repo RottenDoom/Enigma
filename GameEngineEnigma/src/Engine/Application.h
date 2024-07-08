@@ -17,7 +17,7 @@ namespace eng {
 
 		void Run();
 
-		void OnEvent(Event& e);
+		void OnEvent(Event& e); // this function is basically the event listener from the event.h header file
 
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* overlay);

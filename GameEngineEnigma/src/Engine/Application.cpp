@@ -3,6 +3,8 @@
 
 #include <glad/glad.h>
 
+#include "Input.h" 
+
 namespace eng {
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -28,7 +30,7 @@ namespace eng {
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowClosedEvent>(BIND_EVENT_FN(OnWindowClose));
 
-		ENG_CORE_WARN("{0}", e);
+		// ENG_CORE_WARN("{0}", e);
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
@@ -66,6 +68,7 @@ namespace eng {
 			{
 				layer->OnUpdate();
 			}
+			auto [x, y] = Input::GetMousePosition();
 
 			m_Window->OnUpdate();
 		}
