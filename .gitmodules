@@ -7,3 +7,6 @@
 [submodule "GameEngineEnigma/vendor/imgui"]
 	path = GameEngineEnigma/vendor/imgui
 	url = https://github.com/RottenDoom/imgui
+[submodule "GameEngineEnigma/vendor/glm"]
+	path = GameEngineEnigma/vendor/glm
+	url = https://github.com/g-truc/glm.git

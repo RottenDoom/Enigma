@@ -9,12 +9,18 @@ workspace "GameEngineEnigma"
 		"Dist"
 	}
 	
+	defines
+	{
+		"_CRT_SECURE_NO_WARNINGS"
+	}
+	
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "GameEngineEnigma/vendor/GLFW/include"
 IncludeDir["Glad"] = "GameEngineEnigma/vendor/Glad/include"
 IncludeDir["ImGui"] = "GameEngineEnigma/vendor/imgui"
+IncludeDir["glm"] = "GameEngineEnigma/vendor/glm"
 
 
 include "GameEngineEnigma/vendor/GLFW"
@@ -23,9 +29,10 @@ include "GameEngineEnigma/vendor/imgui"
 
 project "GameEngineEnigma"
 	location "GameEngineEnigma"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime = "on"
 	
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -36,7 +43,10 @@ project "GameEngineEnigma"
 	files 
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl"
+
 	}
 	
 	includedirs
@@ -45,7 +55,8 @@ project "GameEngineEnigma"
 		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}"
 	}
 	
 	links
@@ -68,17 +79,6 @@ project "GameEngineEnigma"
 			"GLFW_INCLUDE_NONE"
 		}
 		
-		postbuildcommands
-		{
-			--('copy /Y "%{cfg.buildtarget.relpath}" "../bin/' .. outputdir .. '/Sandbox/"')
-			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
-			--IF EXIST ..\bin\Debug-windows-x86_64\GameEngineEnigma\GameEngineEnigma.dll (
-			--	copy /Y ..\bin\Debug-windows-x86_64\GameEngineEnigma\GameEngineEnigma.dll ..\bin\Debug-windows-x86_64\Sandbox > nul
-			--) ELSE (
-			--copy /Y ..\bin\Debug-windows-x86_64\GameEngineEnigma\GameEngineEnigma.dll ..\bin\Debug-windows-x86_64\Sandbox > nul
-			--)
-		}
-		
 	filter "configurations:Debug"
 		defines "ENG_DEBUG"
 		runtime "Debug"
@@ -98,7 +98,8 @@ project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime = "on"
 	
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -112,7 +113,10 @@ project "Sandbox"
 	includedirs
 	{
 		"GameEngineEnigma/vendor/spdlog/include",
-		"GameEngineEnigma/src"
+		"GameEngineEnigma/src",
+		"GameEngineEnigma/vendor",
+		"%{IncludeDir.glm}"
+
 	}
 	
 	links
@@ -121,7 +125,6 @@ project "Sandbox"
 	}
 	
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion = "latest"
 		
 		defines
